@@ -1,0 +1,6 @@
+<div class="row">
+    <div>Search Results:
+        <search-results solr-url="/suggest" query="" display-field="textsuggest"></search-results>
+    </div>
+</div>
+<!-- http://localhost:8983/solr/ac/browse -->
