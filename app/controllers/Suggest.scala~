@@ -1,0 +1,17 @@
+package controllers
+import play.api.mvc.{Controller, Action}
+import play.api.libs.json.{Json, JsString}
+import javax.inject.Singleton
+
+/**
+ * Created by Owner on 4/27/14.
+ */
+@Singleton
+class Suggest  extends Controller {
+  def find( query: String ) = Action{ implicit request =>
+    render {
+      case Accepts.Json() => Ok ( Json.obj( "textsuggest" -> JsString( query )))
+    }
+  }
+
+}

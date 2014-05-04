@@ -1,0 +1,57 @@
+package controllers
+
+import play.api.mvc.{Controller, Action}
+import reactivemongo.api.Cursor
+import play.api.libs.json.{JsArray, Json}
+import scala.concurrent.{ExecutionContext, Future}
+import javax.inject.Singleton
+import play.modules.reactivemongo.MongoController
+import play.modules.reactivemongo.json.collection.JSONCollection
+import org.slf4j.{LoggerFactory, Logger}
+
+/**
+ * Created by Owner on 4/30/14.
+ */
+@Singleton
+class Places  extends Controller with MongoController {
+
+  private final val logger: Logger = LoggerFactory.getLogger(classOf[Places])
+
+  /*
+   * Get a JSONCollection (a Collection implementation that is designed to work
+   * with JsObject, Reads and Writes.)
+   * Note that the `collection` is not a `val`, but a `def`. We do _not_ store
+   * the collection reference to avoid potential problems in development with
+   * Play hot-reloading.
+   */
+  def collection: JSONCollection = db.collection[JSONCollection]("places")
+
+  import models.{Place}
+  import models.JsonFormats._
+  import ExecutionContext.Implicits.global
+
+  def find(locId : String ) = Action.async {
+    // let's do our query
+
+    logger.info( "Searching for place with id " + locId )
+
+    val cursor: Cursor[Place] = collection.
+      // find all
+      find(Json.obj("id" -> locId)).cursor[Place]
+
+    // gather all the JsObjects in a list
+    val futurePlaceList: Future[List[Place]] = cursor.collect[List]()
+
+    // transform the list into a JsArray
+    val futurePersonsJsonArray: Future[JsArray] = futurePlaceList.map { places =>
+      Json.arr(places)
+    }
+
+
+    // everything's ok! Let's reply with the array
+    futurePersonsJsonArray.map {
+      places =>
+        Ok(places(0))
+    }
+  }
+}

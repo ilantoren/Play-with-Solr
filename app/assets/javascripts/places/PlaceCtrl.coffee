@@ -1,0 +1,27 @@
+
+class PlaceCtrl
+
+    constructor: (@$log, @PlaceService, $route  ) ->
+        @$log.debug "constructing PlaceController"
+        @places = []
+        @getPlace( $route.current.params["loc_id"] )
+
+
+    getPlace: ( param1  ) ->
+        @$log.debug "ctrl getPlace() by #{param1}"
+
+        @PlaceService.getPlace( param1 )
+        .then(
+            (data) =>
+                @$log.debug "Promise returned #{data.length} Places"
+                @places = data
+            ,
+            (error) =>
+                @$log.error "Unable to get Place: #{error}"
+            )
+            
+      isCountry : ( typestr ) ->   typestr is "Countries" ? true : false
+       
+
+
+controllersModule.controller('PlaceCtrl', PlaceCtrl)

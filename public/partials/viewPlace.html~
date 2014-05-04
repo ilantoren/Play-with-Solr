@@ -1,0 +1,20 @@
+
+
+    <div class="row" ng-controller="PlaceCtrl as pl">
+        &NonBreakingSpace;
+        <div class="jumbotron">
+            <h2>A Modern Web Template</h2>
+
+            <p class="pull-right">... a UI created using AngularJS and Bootstrap</p>
+        </div>
+
+
+        <div class="row">
+                <h3>
+                    place name: {{pl.param1}}
+                 </h3>
+
+                <p><b>Name </b>{{pl.places[0].textsuggest}}</p><br/>
+                <p><a href ="{{pl.places[0].url}}">{{pl.places[0].typestr}}</a></p>
+
+    </div>

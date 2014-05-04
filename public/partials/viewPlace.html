@@ -1,0 +1,19 @@
+
+
+    <div class="row" ng-controller="PlaceCtrl as pl">
+        &NonBreakingSpace;
+        <div class="jumbotron">
+            <h2>Location display (from MongoDB)</h2>
+        </div>
+
+
+        <div class="row">
+                <h3>
+                    place name: {{pl.places[0].textsuggest}}
+                 </h3>
+                <p><b>Type {{pl.places[0].typestr}}</b>  </p>
+                <p><b>Name </b>{{pl.places[0].textsuggest}}</p><br/>
+                <p>{{pl.places[0].subtext}}</p>
+                <p><a href ="{{pl.places[0].url}}">{{pl.places[0].url}}</a></p>
+
+    </div>
