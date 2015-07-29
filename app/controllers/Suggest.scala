@@ -76,7 +76,7 @@ class Suggest  extends Controller {
 
 }
 object Statix { //Noder must extend this
-    def SolrSelectWSReq = WS.url("http://127.0.0.1:8983/solr/ac/browse/")
+    def SolrSelectWSReq = WS.url("http://127.0.0.1:8983/solr/mfe/browse/")
     def doParams(request: WS.WSRequestHolder, params: List[(String, String)]) = {
         params.foldLeft( request){
             (wsReq, tuple) => wsReq.withQueryString( tuple)}}
